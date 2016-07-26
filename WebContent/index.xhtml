@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>JNotes</title>
+
+	<h:outputStylesheet library="css" name="style.css"></h:outputStylesheet>
+	<link rel="shortcut icon" type="image/jpeg" href="resources/img/note-logo.png"></link>
+</h:head>
+
+<h:body class="bodyClass">
+	<div id="top-content" class="main-div">
+		<h:outputLink value="/JNotes"><h:graphicImage library="img" name="note-logo.png" styleClass="top-logo" /></h:outputLink>
+		<br />
+		
+		<h:form prependId="false">
+			<p:menubar styleClass="menubar">
+				<p:menuitem value="New" icon="fa fa-plus-circle" actionListener="#{beanText.onAddNote}" 
+				update="frm2:itTitle frm2:itContent frm2:btnAct dlg" />
+				
+				<f:facet name="options">
+					<p:commandButton value="About" onclick="PF('dialogInfo').show();"></p:commandButton>
+				</f:facet>
+			</p:menubar>
+		</h:form>
+	</div>
+	<br />
+	
+	<div id="content"  class="main-div">		
+		<h:form prependId="false">
+		<div>
+			<p:dataTable value="#{indexBean.notas}" var="nota" selection="#{indexBean.notaSelec}" selectionMode="single" 
+				resizableColumns="true" rowKey="#{nota.titulo}" paginator="true" rows="8" id="tblNotas">
+				<p:column style="width:30%;">#{nota.titulo}</p:column>
+				<p:column style="width:70%;">#{nota.contenido}</p:column>
+			</p:dataTable>
+			<br />
+			
+			<p:commandButton id="btnView" value="View" actionListener="#{beanText.onViewNote}" update="dlg"/>
+			<p:commandButton id="btnUpdate" value="Update" actionListener="#{beanText.onUpdateNote}" update="dlg"/>
+			<p:commandButton id="btnDelete" value="Delete" actionListener="#{beanText.deleteNote}" update="tblNotas"/>
+		</div>
+		</h:form>
+	</div>
+	
+	<p:dialog widgetVar="diag1" modal="true" resizable="false" responsive="true" hideEffect="fade" showEffect="fade" 
+	header="#{beanText.dialogMode eq 'View'? 'Note' : (beanText.dialogMode eq 'Update' ? 'Edit Note':'New Note')}" id="dlg">
+		<div class="noteCreationDialog">
+			<h:form id="frm2" prependId="true">
+				<h:panelGrid columns="3">
+					Title: 
+					<p:inputText id="itTitle" styleClass="noteCreationFields" value="#{beanText.noteTitle}" required="true" 
+					requiredMessage="*" readonly="#{beanText.dialogMode eq 'View'}"/>
+					<h:message for="itTitle" rendered="true" id="msj1" styleClass="noteCreationInvalidText"/>
+					
+					<h:outputText />
+					<p:inputTextarea id="itContent" styleClass="noteCreationFields" value="#{beanText.noteContent}" 
+					required="true" requiredMessage="*" readonly="#{beanText.dialogMode eq 'View'}"/>
+					<h:message for="itContent" id="msj2" styleClass="noteCreationInvalidText" />		
+				</h:panelGrid>
+				
+				<p:commandButton style="widt:45px;" value="#{beanText.dialogMode eq 'Update' ? 'Update':'Create'}" 
+				actionListener="#{beanText.addOrUpdateNote}" update="msj1 msj2 tblNotas" id="btnAct" 
+				rendered="#{beanText.dialogMode ne 'View'}" />
+				
+			</h:form>
+		</div>
+	</p:dialog>
+	
+	<p:dialog widgetVar="dialogInfo" modal="true" resizable="false" responsive="true" draggable="false" hideEffect="fade" 
+	showEffect="fade" header="About">
+		<center><strong>Developed by:</strong> Ing. Jorge Luis Rosis</center><br />
+		<center>(829)-830-2421</center>		
+	</p:dialog>
+</h:body>
+
+</html>

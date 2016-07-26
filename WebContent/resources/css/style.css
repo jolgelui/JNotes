@@ -1,0 +1,47 @@
+@CHARSET "ISO-8859-1";
+.bodyClass{
+	background-image: url("/JNotes/resources/img/notes-background.jpg"); 
+  -webkit-background-size: inherit;
+  -moz-background-size: inherit;
+  -o-background-size: inherit;
+  background-size: inherit;
+  
+	background-position:100%;
+	background-repeat:no-repeat;
+	background-attachment:fixed;
+		
+	font-family: arial, helvetica, sans-serif;	
+}
+.contentclass{	
+	margin: 3% 11% 11% 11%;
+}
+
+.top-logo{
+    width: 115px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.main-div{	
+    width: 80%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.menubar{
+	margin-top: 25px;
+}
+
+.noteCreationDialog{
+	width:370px;
+}
+
+.noteCreationFields{
+	width:300px;
+}
+
+.noteCreationInvalidText{
+	color:red;
+}
